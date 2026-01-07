@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\AddUpdateProductRequest;
+use App\Models\Product;
+use App\Services\ProductService;
+use Exception;
 
 class ProductController extends Controller
 {
@@ -11,7 +14,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $products = ProductService::getProducts();
+
+            return view('pages.products')->with([
+                'products' => $products
+            ]);
+        }catch(Exception $e){
+            return view('pages.products')->with([
+                'error' => 'Something went wrong.'
+            ]);
+        }
     }
 
     /**
@@ -25,9 +38,27 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AddUpdateProductRequest $request)
     {
-        //
+        try{
+            $addProduct = ProductService::addProduct($request->validated(), $request->file('image'));
+
+            if(!$addProduct){
+                throw new Exception('Failed to add product.');
+            }
+
+            $products = ProductService::getProducts();
+            $data_view = view('pages.templates.product_listing', compact('products'))->render();
+
+            return response()->json([
+                'message' => 'Product added successfully.',
+                'data' => $data_view
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'message' => 'Something went wrong.'
+            ], 500);
+        }
     }
 
     /**
@@ -43,22 +74,75 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        try{
+            $product = ProductService::getProduct($id);
+
+            if(!$product){
+                throw new Exception('Failed to fetch product.');
+            }
+
+            $data_view = view('pages.templates.product_add_update_form', compact('product'))->render();
+
+            return response()->json([
+                'message' => 'Product details fetch successfully.',
+                'data' => $data_view
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'message' => 'Something went wrong.'
+            ], 500);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AddUpdateProductRequest $request, Product $product)
     {
-        //
+        try{
+            $updateProduct = ProductService::updateProduct($request->validated(), $request->file('image'), $product);
+
+            if(!$updateProduct){
+                throw new Exception('Failed to update product.');
+            }
+
+            $products = ProductService::getProducts();
+            $data_view = view('pages.templates.product_listing', compact('products'))->render();
+
+            return response()->json([
+                'message' => 'Product updated successfully.',
+                'data' => $data_view
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'message' => 'Something went wrong.'
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        try{
+            $deleteProduct = ProductService::deleteProduct($product);
+
+            if(!$deleteProduct){
+                throw new Exception('Failed to delete product.');
+            }
+
+            $products = ProductService::getProducts();
+            $data_view = view('pages.templates.product_listing', compact('products'))->render();
+
+            return response()->json([
+                'message' => 'Product deleted successfully.',
+                'data' => $data_view
+            ], 200);
+        }catch(Exception $e){
+            return response()->json([
+                'message' => 'Something went wrong.'
+            ], 500);
+        }
     }
 }
