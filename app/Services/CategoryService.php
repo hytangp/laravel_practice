@@ -1,12 +1,17 @@
 <?php
 namespace App\Services;
 
+use App\CategoryStatusNamesEnum;
 use App\Models\Category;
 
 class CategoryService
 {
     public static function getCategories(){
         return Category::select('id', 'name', 'description', 'status')->get();
+    }
+
+    public static function getActiveCategories(){
+        return Category::select('id', 'name', 'description', 'status')->where('status', CategoryStatusNamesEnum::ACTIVE->value)->get();
     }
 
     public static function getCategory($id){

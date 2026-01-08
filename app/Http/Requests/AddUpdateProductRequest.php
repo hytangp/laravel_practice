@@ -13,6 +13,8 @@ class AddUpdateProductRequest extends FormRequest
             'price' => ['required', 'numeric'],
             'status' => ['required', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'categories' => ['nullable', 'array'],
+            'categories.*' => ['string', 'exists:categories,id']
         ];
     }
 }

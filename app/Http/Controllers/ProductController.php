@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddUpdateProductRequest;
 use App\Models\Product;
+use App\Services\CategoryService;
 use App\Services\ProductService;
 use Exception;
 
@@ -16,9 +17,11 @@ class ProductController extends Controller
     {
         try{
             $products = ProductService::getProducts();
+            $categories = CategoryService::getActiveCategories();
 
             return view('pages.products.products')->with([
-                'products' => $products
+                'products' => $products,
+                'categories' => $categories
             ]);
         }catch(Exception $e){
             return view('pages.products.products')->with([
@@ -76,12 +79,13 @@ class ProductController extends Controller
     {
         try{
             $product = ProductService::getProduct($id);
+            $categories = CategoryService::getActiveCategories();
 
             if(!$product){
                 throw new Exception('Failed to fetch product.');
             }
 
-            $data_view = view('pages.templates.products.product_add_update_form', compact('product'))->render();
+            $data_view = view('pages.templates.products.product_add_update_form', compact('product', 'categories'))->render();
 
             return response()->json([
                 'message' => 'Product details fetch successfully.',

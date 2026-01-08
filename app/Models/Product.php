@@ -12,6 +12,10 @@ class Product extends Model
     
     protected $fillable = ['name', 'price', 'status', 'image'];
 
+    public function linked_categories(){
+        return $this->hasMany(ProductCategory::class, 'product_id', 'id');
+    }
+
     public function getStatusNameAttribute()
     {
         return ProductStatusNamesEnum::from($this->status)->label(); 

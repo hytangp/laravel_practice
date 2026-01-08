@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        @if($categories->isEmpty())
+        @if(!$categories || $categories->isEmpty())
             <tr>
                 <td colspan="5">No categories available.</td>
             </tr>

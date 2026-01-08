@@ -20,10 +20,6 @@
         <div id="category_listing_table">
             @include('pages.templates.categories.category_listing', ['categories' => $categories ?? null])
         </div>
-        <p>
-            <a href="{{ route('product.index') }}" class="m-2 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Get Products</a>
-            <a href="{{ route('dashboard') }}" class="m-2 link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Dashboard</a>
-        </p>
     </div>
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

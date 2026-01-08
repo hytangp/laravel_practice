@@ -26,7 +26,7 @@ $(document).ready(function(){
                 $('#successAlert').removeClass('d-none').find('strong').text(response.message);
             },
             error: function(xhr) {
-                alert(xhr.responseText.message);
+                alert(xhr.responseText.message ?? 'Something went wrong');
             }
         });
     });
@@ -43,7 +43,7 @@ $(document).ready(function(){
                 modal.show();
             },
             error: function(xhr) {
-                alert(xhr.responseText.message);
+                alert(xhr.responseText.message ?? 'Something went wrong');
             }
         });
     });
@@ -62,7 +62,7 @@ $(document).ready(function(){
                 $('#successAlert').removeClass('d-none').find('strong').text(response.message);
             },
             error: function(xhr) {
-                alert(xhr.responseText.message);
+                alert(xhr.responseText.message ?? 'Something went wrong');
             }
         });
     });

@@ -17,6 +17,17 @@
                 <input name="price" type="number" class="form-control" value="{{ $product->price ?? '' }}" id="productPrice" required min="0" step="0.01">
             </div>
             <div class="mb-3">
+                <label for="productCategory" class="col-form-label">Category:</label>
+                <select class="form-select" multiple name="categories[]">
+                    <option disabled>Select category(s) of the Product</option>
+                    @if(!empty($categories))
+                        @foreach ($categories as $category)
+                            <option {{ !empty($product) && !empty($product->linked_categories) && $product->linked_categories->contains('category_id', $category->id) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->cat_name }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="productStatus" class="col-form-label">Status:</label>
                 <select class="form-select" name="status" required>
                     <option {{ !empty($product) && $product->status == 'inactive' ? 'selected' : '' }} value="inactive">In-Active</option>

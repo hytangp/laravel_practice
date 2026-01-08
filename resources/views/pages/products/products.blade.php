@@ -20,16 +20,12 @@
         <div id="product_listing_table">
             @include('pages.templates.products.product_listing', ['products' => $products ?? null])
         </div>
-        <p>
-            <a href="{{ route('category.index') }}" class="m-2 link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Get Categories</a>
-            <a href="{{ route('dashboard') }}" class="m-2 link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Dashboard</a>
-        </p>
     </div>
 
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" id="addUpdateProductFormModal">
-                @include('pages.templates.products.product_add_update_form')
+                @include('pages.templates.products.product_add_update_form', ['categories' => $categories ?? null])
             </div>
         </div>
     </div>

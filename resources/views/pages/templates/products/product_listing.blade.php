@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        @if($products->isEmpty())
+        @if(!$products || $products->isEmpty())
             <tr>
                 <td colspan="6">No products available.</td>
             </tr>
