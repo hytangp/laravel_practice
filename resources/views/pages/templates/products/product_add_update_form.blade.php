@@ -1,10 +1,10 @@
-<form id="addUpdateProductForm" data-url="{{ isset($product) ? route('product.update', $product->id) : route('product.store') }}" enctype="multipart/form-data">
+<form id="addUpdateProductForm" data-url="{{ !empty($product) ? route('product.update', $product->id) : route('product.store') }}" enctype="multipart/form-data">
     @csrf
-    @if(isset($product))
+    @if(!empty($product))
         @method('PUT')
     @endif
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">{{ isset($product) ? 'Update' : 'Add' }} Product</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle">{{ !empty($product) ? 'Update' : 'Add' }} Product</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body form-group">
@@ -19,14 +19,14 @@
             <div class="mb-3">
                 <label for="productStatus" class="col-form-label">Status:</label>
                 <select class="form-select" name="status" required>
-                    <option {{ isset($product) && $product->status == 'inactive' ? 'selected' : '' }} value="inactive">In-Active</option>
-                    <option {{ isset($product) && $product->status == 'active' ? 'selected' : '' }} value="active">Active</option>
+                    <option {{ !empty($product) && $product->status == 'inactive' ? 'selected' : '' }} value="inactive">In-Active</option>
+                    <option {{ !empty($product) && $product->status == 'active' ? 'selected' : '' }} value="active">Active</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="formFile" class="form-label">Image:</label>
                 <input name="image" class="form-control" type="file" id="formFile">
-                @if(isset($product) && !empty($product->image))
+                @if(!empty($product) && !empty($product->image))
                     <img src="{{ asset('storage/' . $product->image) }}" class="img-thumbnail show-uploaded-image mt-2" width="100">
                 @endif
             </div>

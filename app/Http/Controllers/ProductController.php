@@ -17,11 +17,11 @@ class ProductController extends Controller
         try{
             $products = ProductService::getProducts();
 
-            return view('pages.products')->with([
+            return view('pages.products.products')->with([
                 'products' => $products
             ]);
         }catch(Exception $e){
-            return view('pages.products')->with([
+            return view('pages.products.products')->with([
                 'error' => 'Something went wrong.'
             ]);
         }
@@ -48,7 +48,7 @@ class ProductController extends Controller
             }
 
             $products = ProductService::getProducts();
-            $data_view = view('pages.templates.product_listing', compact('products'))->render();
+            $data_view = view('pages.templates.products.product_listing', compact('products'))->render();
 
             return response()->json([
                 'message' => 'Product added successfully.',
@@ -81,7 +81,7 @@ class ProductController extends Controller
                 throw new Exception('Failed to fetch product.');
             }
 
-            $data_view = view('pages.templates.product_add_update_form', compact('product'))->render();
+            $data_view = view('pages.templates.products.product_add_update_form', compact('product'))->render();
 
             return response()->json([
                 'message' => 'Product details fetch successfully.',
@@ -107,7 +107,7 @@ class ProductController extends Controller
             }
 
             $products = ProductService::getProducts();
-            $data_view = view('pages.templates.product_listing', compact('products'))->render();
+            $data_view = view('pages.templates.products.product_listing', compact('products'))->render();
 
             return response()->json([
                 'message' => 'Product updated successfully.',
@@ -133,7 +133,7 @@ class ProductController extends Controller
             }
 
             $products = ProductService::getProducts();
-            $data_view = view('pages.templates.product_listing', compact('products'))->render();
+            $data_view = view('pages.templates.products.product_listing', compact('products'))->render();
 
             return response()->json([
                 'message' => 'Product deleted successfully.',

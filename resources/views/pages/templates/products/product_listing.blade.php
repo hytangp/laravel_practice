@@ -12,7 +12,7 @@
     <tbody>
         @if($products->isEmpty())
             <tr>
-                <td colspan="5">No products available.</td>
+                <td colspan="6">No products available.</td>
             </tr>
         @else
             @foreach($products as $product)
@@ -20,7 +20,7 @@
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
-                    <td>{{ $product->status }}</td>
+                    <td>{{ $product->status_name }}</td>
                     <td><img src="{{ $product->image ? 'storage/'.$product->image : '' }}" width="100"></td>
                     <td><button type="button" class="btn btn-success edit-product" data-url="{{ route('product.edit', $product->id) }}">Edit</button>
                         <button type="button" class="btn btn-danger delete-product" data-url="{{ route('product.destroy', $product->id) }}">Delete</button>
